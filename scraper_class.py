@@ -42,7 +42,7 @@ class DepopScraper:
             if new_height == prev_height:
                 print("Scroll limit reached at {} scrolls\n".format(self.scroll_count))
                 self.saved_scroll_pos = self.driver.page_source
-                #self.find_sellers(self.saved_scroll_pos)
+                self.find_sellers(self.saved_scroll_pos)
             prev_height = new_height
         global_end = time.time()
         global_elapsed = global_end - global_start
@@ -73,13 +73,12 @@ class DepopScraper:
                 batches_processed += 1
                 end = time.time()
                 time_elapsed = end - start
-                print("Batch {} out of {} scraped, appoximately {} minutes remaining\n".format(batches_processed, product_batches, time_elapsed * (product_batches - batches_processed)))
+                print("Batch {} out of {} scraped, appoximately {} minutes remaining".format(batches_processed, product_batches, time_elapsed * (product_batches - batches_processed)))
         self.seller_links.extend(seller_link_temp)
         print("{} seller links scraped in total\n".format(self.products_scraped))
 
         batch_processed = 0
         total_batches = len(seller_link_temp)//24
-        sellers_processed = 0
         seller_list_temp = []
         print("Scraping seller pages for data capture...\n")
         for link in seller_link_temp:
@@ -99,7 +98,7 @@ class DepopScraper:
                 time_elapsed = end - start
                 batch_processed += 1
                 mins_remaining = (time_elapsed * (total_batches - batch_processed))
-                print("Scraped batch {} of {}. Approximately {} minutes remaining".format(batch_processed, total_batches,mins_remaining))
+                print("Scraped batch {} of {}. Approximately {} minutes remaining".format(batch_processed, total_batches, mins_remaining))
         self.seller_list.extend(seller_list_temp)
         print("Sellers succesfully added to database")
 
